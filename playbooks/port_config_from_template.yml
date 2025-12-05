@@ -1,0 +1,21 @@
+---
+- name: configure access ports with template
+  hosts: cisco_switches
+  gather_facts: no
+
+  vars:
+    port_map:
+      - { iface: GigabitEthernet1/0/2, vlan: 10, description: Test1 }
+      - { iface: GigabitEthernet1/0/3, vlan: 20, description: Test2 }
+      - { iface: GigabitEthernet1/0/4, vlan: 30, description: Test3 }
+
+  tasks:
+    - name: Render template on controller
+      delegate_to: localhost
+      template:
+        src: "../templates/port_config.j2"
+        dest: "/tmp/{{ inventory_hostname }}_port_config.cfg"
+
+    - name: Push rendered config to device
+      cisco.ios.ios_config:
+        src: "/tmp/{{ inventory_hostname }}_port_config.cfg"

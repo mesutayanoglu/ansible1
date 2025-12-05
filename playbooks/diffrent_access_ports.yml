@@ -1,0 +1,21 @@
+---
+- name: diffrent access port configs
+  hosts: cisco_switches
+  gather_facts: no
+
+  vars:
+    interface_vlan_list:
+      - { iface: GigabitEthernet1/0/2, vlan: 10 }
+      - { iface: GigabitEthernet1/0/3, vlan: 20 }
+      - { iface: GigabitEthernet1/0/4, vlan: 30 }
+
+  tasks:
+    - name: portlari vlan'a ata
+      cisco.ios.ios_config:
+        parents: "interface {{ item.iface }}"
+        lines:
+          - "switchport mode access"
+          - "switchport access vlan {{ item.vlan }}"
+          - "spanning-tree portfast"
+          - "description this_port_member_of_vlan_{{ item.vlan }}"
+      loop: "{{ interface_vlan_list }}"

@@ -1,0 +1,22 @@
+---
+- name: access port vlan config
+  hosts: cisco_switches
+  gather_facts: no
+
+  vars:
+    access_vlan: 10
+    access_ports:
+      - GigabitEthernet1/0/2
+      - GigabitEthernet1/0/3
+      - GigabitEthernet1/0/4
+
+  tasks:
+    - name: configure access ports
+      cisco.ios.ios_config:
+        parents: "interface {{ item }}"
+        lines:
+          - "switchport mode access"
+          - "switchport access vlan {{ access_vlan }}"
+          - "spanning-tree portfast"
+          - "desc access_port_{{item}}"
+      loop: "{{ access_ports }}"

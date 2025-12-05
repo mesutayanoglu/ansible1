@@ -1,0 +1,40 @@
+---
+
+- name: Collect interface, LLDP ve CDP info
+  hosts: cisco_switches
+  gather_facts: no
+
+  tasks:
+
+    - name: show interface status
+      ansible.netcommon.cli_command:
+        command: "show interface status"
+      register: if_status
+
+    - name: show lldp neighbors
+      ansible.netcommon.cli_command:
+        command: "show lldp neighbor"
+      register: lldp_nei
+
+    - name: show cdp neighbors
+      ansible.netcommon.cli_command:
+        command: "show cdp neighbor"
+      register: cdp_nei
+
+    - name: save - interface status
+      delegate_to: localhost
+      copy:
+        content: "{{ if_status.stdout }}"
+        dest: "/backups/info/{{ inventory_hostname }}_if_status.txt"
+
+    - name: kaydet - lldp neighbor
+      delegate_to: localhost
+      copy:
+        content: "{{ lldp_nei.stdout }}"
+        dest: "/backups/info/{{ inventory_hostname }}_lldp.txt"
+
+    - name: kaydet - cdp neighbor
+      delegate_to: localhost
+      copy:
+        content: "{{ cdp_nei.stdout }}"
+        dest: "/backups/info/{{ inventory_hostname }}_cdp.txt"

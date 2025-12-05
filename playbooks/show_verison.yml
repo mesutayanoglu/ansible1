@@ -1,0 +1,14 @@
+---
+- name: Cisco run show version
+  hosts: cisco_switches
+  gather_facts: no
+
+  tasks:
+    - name: show version komutu 
+      ansible.netcommon.cli_command:
+        command: "show version"
+      register: version_out
+
+    - name: yazdir
+      debug:
+        var: version_out.stdout_lines

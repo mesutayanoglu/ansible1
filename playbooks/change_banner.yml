@@ -1,0 +1,11 @@
+---
+- name: Deploy fixed banner to all cisco switches
+  hosts: cisco_switches
+  gather_facts: no
+
+  tasks:
+    - name: Configure login banner via ios_banner
+      cisco.ios.ios_banner:
+        banner: login
+        text: "{{ lookup('template', '../templates/banner_template.j2') }}"
+        state: present

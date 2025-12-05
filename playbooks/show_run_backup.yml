@@ -1,0 +1,17 @@
+---
+- name: cisco running-config backup
+  hosts: cisco_switches
+  gather_facts: no
+
+  tasks:
+    - name: backup operation
+      cisco.ios.ios_config:
+        backup: yes
+        backup_options:
+          dir_path: "/backups/switch_backups"
+          filename: "{{ inventory_hostname }}-{{ lookup('pipe','date +%Y%m%d-%H%M%S') }}.cfg"
+      register: backup_result
+
+    - name: show file path
+      debug:
+        var: backup_result.backup_path

@@ -1,0 +1,10 @@
+---
+- name: set hostname
+  hosts: cisco_switches
+  gather_facts: no
+
+  tasks:
+    - name: set hostname
+      cisco.ios.ios_config:
+        lines:
+          - hostname ANSIBLE-DEMO

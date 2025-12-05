@@ -1,0 +1,13 @@
+---
+- name: first
+  hosts: cisco_switches
+  gather_facts: no
+
+  tasks:
+    - name: get config 
+      cisco.ios.ios_facts:
+        gather_subset: all
+
+    - name: print
+      debug:
+        msg: "The hostname is {{ansible_net_hostname}} and the OS is {{ansible_net_version}} and the image is: {{ansible_net_image}} "

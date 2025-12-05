@@ -1,0 +1,8 @@
+{% for p in port_map %}
+interface {{ p.iface }}
+ switchport mode access
+ switchport access vlan {{ p.vlan }}
+ spanning-tree portfast
+ description access_port_{{ p.description }}
+
+{% endfor %}
