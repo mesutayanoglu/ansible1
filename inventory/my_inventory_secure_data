@@ -1,0 +1,12 @@
+[cisco_switches]
+sw_ansible ansible_host=192.168.224.128
+
+[cisco_switches:vars]
+ansible_connection=ansible.netcommon.network_cli
+ansible_network_os=cisco.ios.ios
+ansible_user= "{{ cisco_username }}"
+ansible_password= "{{ cisco_password }}"
+ansible_become=true
+ansible_become_method=enable
+
+

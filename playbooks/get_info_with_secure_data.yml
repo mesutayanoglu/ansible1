@@ -1,0 +1,12 @@
+---
+- name: Get_information_with_secure_data
+  hosts: cisco_switches
+  gather_facts: false
+  vars_files: /root/ansible1/inventory/secure_data.yml
+  tasks:
+    - name: Get_information
+      ansible.builtin.debug:
+        msg:
+          - "{{ inventory_hostname }} bilgileri aliniyor..."
+          - "{{ ansible_user }} kullanici adi ile baglaniliyor."
+          - "Info: {{ info }}"
