@@ -1,0 +1,26 @@
+---
+- name: IOS Command Wait For
+  hosts: cisco_switches
+  gather_facts: no
+  vars_files:
+    - ../vars/cisco_switches.yml
+
+  tasks:
+    - name: Send command
+      cisco.ios.ios_command:
+        commands:
+          - "show version"
+          - "show ip interface brief"
+        match: all
+        wait_for:
+          - "result[0] contains Cisco"
+          - "result[1] contains 192.168.224.128"
+      register: command_output
+
+    - name: Print show version
+      ansible.builtin.debug:
+        msg: "{{ command_output.stdout_lines[0] }}"
+
+    - name: Print show ip interface brief
+      ansible.builtin.debug:
+        msg: "{{ command_output.stdout_lines[1] }}"
