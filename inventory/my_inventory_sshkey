@@ -1,9 +1,10 @@
 [cisco_switches]
 sw_ansible ansible_host=192.168.224.128 ansible_user=ansible_admin ansible_ssh_private_key_file=/root/.ssh/id_rsa
+
 [cisco_switches:vars]
 ansible_connection=ansible.netcommon.network_cli
 ansible_network_os=cisco.ios.ios
-ansible_user= !vault |
+ansible_user: !vault |
           $ANSIBLE_VAULT;1.2;AES256;vid_username
           33666631313537633538643137386463363961636262373634643961613938376361636464353766
           6134343134323431353233393062343838326662343334340a303834363939613030336536643339
@@ -17,7 +18,7 @@ ansible_password: !vault |
           36373062666165386131323035613032343637663532666439366138316636313962326534356663
           3262303661643933650a333563306266613462393366323230303432656232363132613635396135
           3061
-ansible_become=true
+ansible_become: true
 ansible_become_method=enable
+ip_domain_name: from_inv_ssh_file.com
 #ansible_become_password=enable_sifresi
-

@@ -1,0 +1,16 @@
+---
+- name: Configure_domain_name
+  hosts: cisco_switches
+  gather_facts: no
+  vars_files: ../vars/cisco_switches.yml
+
+  tasks:
+    - name: Configure IP Domain Name
+      cisco.ios.ios_config:
+        lines:
+          - "ip domain-name {{ ip_domain_name }}"
+      register: ip_domain_output
+
+    - name: Verify IP Domain Name Configuration
+      ansible.builtin.debug:
+        msg: "IP Domain Name configured as {{ ip_domain_output }}"
