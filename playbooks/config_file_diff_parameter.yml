@@ -1,0 +1,17 @@
+---
+- name: IOS Config
+  hosts: cisco_switches
+  gather_facts: false
+
+  tasks:
+    - name: Config IP Domain Name
+      cisco.ios.ios_config:
+        lines: ip domain-name mesutyeni.com
+        diff_against: running
+      register: domain_config
+
+    - name: Show old/new domain from diff
+      ansible.builtin.debug:
+        msg: >
+          Eski config: {{ (domain_config.diff.before | regex_search('ip domain-name (.+)', '\1')) | default('yok', true) }}
+          Yeni config: {{ (domain_config.diff.after  | regex_search('ip domain-name (.+)', '\1')) | default('yok', true) }}
