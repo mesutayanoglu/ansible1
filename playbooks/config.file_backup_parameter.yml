@@ -1,0 +1,24 @@
+---
+- name: IOS Config
+  hosts: cisco_switches
+  gather_facts: false
+
+  tasks:
+    - name: Config IP Domain Name
+      cisco.ios.ios_config:
+        lines: ip domain-name mesut.com
+        backup: yes
+        backup_options:
+          dir_path: ./switch_backups/
+          filename: "{{ inventory_hostname }}_{{ ansible_ssh_host }}_config.txt"
+      register: domain_config
+
+    - name: Select IP Domain Name
+      cisco.ios.ios_command:
+        commands: "show run | inc ip domain-name mesut.com"
+      register: domain_config
+
+  
+    - name: Print Output
+      ansible.builtin.debug:
+        msg: " The new domain name is {{ domain_config.stdout[0] }}"

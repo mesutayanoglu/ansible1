@@ -1,5 +1,6 @@
 [cisco_switches]
-sw_ansible ansible_host=192.168.224.128 ansible_user=ansible_admin ansible_ssh_private_key_file=/root/.ssh/id_rsa
+sw_ansible ansible_host=192.168.224.128
+
 [cisco_switches:vars]
 ansible_connection=ansible.netcommon.network_cli
 ansible_network_os=cisco.ios.ios
@@ -8,4 +9,5 @@ ansible_password=datnes2024
 ansible_become=true
 ansible_become_method=enable
 #ansible_become_password=enable_sifresi
+
 

@@ -1,0 +1,127 @@
+Building configuration...
+
+Current configuration : 2334 bytes
+!
+! Last configuration change at 11:38:01 UTC Thu Sep 28 2028 by datnesadmin
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ANSIBLE-DEMO
+!
+boot-start-marker
+boot-end-marker
+!
+enable password datnes2024
+!
+username datnesadmin privilege 15 secret 5 $1$m7qg$N7g7Xw1ye/EGXUGJBmd.K1
+username ansible_user privilege 15
+username ansible_admin privilege 15
+no aaa new-model
+switch 1 provision ws-c3560cx-8xpd-s
+system mtu routing 1500
+!
+!
+!
+!
+ip routing
+!
+!
+ip domain-name testdomain.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+lldp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/1
+!
+interface GigabitEthernet1/0/2
+!
+interface GigabitEthernet1/0/3
+!
+interface GigabitEthernet1/0/4
+!
+interface GigabitEthernet1/0/5
+!
+interface GigabitEthernet1/0/6
+!
+interface GigabitEthernet1/0/7
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/8
+!
+interface TenGigabitEthernet1/0/7
+!
+interface TenGigabitEthernet1/0/8
+!
+interface TenGigabitEthernet1/0/1
+!
+interface TenGigabitEthernet1/0/2
+!
+interface Vlan1
+ ip address 192.168.224.128 255.255.255.0
+!
+ip default-gateway 192.168.224.1
+ip forward-protocol nd
+ip http server
+ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 192.168.224.1
+ip ssh version 2
+ip ssh pubkey-chain
+  username ansible_user
+   key-hash ssh-rsa 1949B009B587116749F5B77FF3A0600F ansible-manager
+  username ansible_admin
+   key-hash ssh-rsa 1949B009B587116749F5B77FF3A0600F ansible-manager
+!
+!
+!
+banner login ^C
+                  ___                                              __                      
+                 /   |   __  __  ____ _   ____   ____    ____ _   / /  __  __              
+ ______         / /| |  / / / / / __ `/  / __ \ / __ \  / __ `/  / /  / / / /        ______
+/_____/        / ___ | / /_/ / / /_/ /  / / / // /_/ / / /_/ /  / /  / /_/ /        /_____/
+              /_/  |_| \__, /  \__,_/  /_/ /_/ \____/  \__, /  /_/   \__,_/                
+                      /____/                          /____/                               
+^C
+!
+line con 0
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+end

@@ -17,4 +17,4 @@
           - "Switch model is {{ ansible_facts.net_model }}"
           - "Test varible is {{ test_var }}"
 
-# Sadece ansible_facts degiskenini debug ile yazdirir.
+# ansible_facts degiskenini ve custom degiskenleri debug ile yazdirir.
